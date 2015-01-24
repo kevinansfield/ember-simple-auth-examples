@@ -15,6 +15,14 @@
           {{#link-to "index"}}Home{{/link-to}}
         </li>
       </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li>
+          <span>{{session.user.name}}</span>
+        </li>
+        <li>
+          {{#link-to "signup"}}Signup{{/link-to}}
+        </li>
+      </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
