@@ -7,7 +7,7 @@ class SignupsControllerTest < ActionController::TestCase
       setup do
         @signup = {
           name: 'Test User',
-          email: 'test@example.com',
+          email: 'create-test@example.com',
           password: 'password'
         }
       end

@@ -19,11 +19,8 @@ class EmailPasswordSignupTest < ActiveSupport::TestCase
   end
 
   should "require a unique e-mail" do
-    attrs = {
-      email: 'test@example.com', password: 'testing', name: 'Test'
-    }
-    user = EmailPasswordSignup.create(attrs)
-    copy_cat = EmailPasswordSignup.new(attrs)
+    user = users(:main)
+    copy_cat = EmailPasswordSignup.new(email: user.email)
     assert_invalid copy_cat, email: "has already been taken"
   end
 
@@ -40,7 +37,7 @@ class EmailPasswordSignupTest < ActiveSupport::TestCase
       setup do
         @signup = EmailPasswordSignup.new(
           name: 'Test User',
-          email: 'test@example.com',
+          email: 'create-test@example.com',
           password: 'password')
       end
 

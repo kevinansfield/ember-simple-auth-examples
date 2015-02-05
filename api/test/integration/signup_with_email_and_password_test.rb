@@ -5,7 +5,7 @@ class SignupWithEmailAndPasswordTest < ActionDispatch::IntegrationTest
   test 'successful signup' do
     params = { signup: {
       name: 'Test User',
-      email: 'test@example.com',
+      email: 'signup-test@example.com',
       password: 'password'
     }}
 
@@ -14,24 +14,12 @@ class SignupWithEmailAndPasswordTest < ActionDispatch::IntegrationTest
     assert_response :created
 
     # returns signup and side-loaded user record
-    expected_response = {
-      'signup' => {
-        'id' => 1,
-        'name' => 'Test User',
-        'email' => 'test@example.com',
-        'user_id' => 1
-      },
-      'users' => [
-        {
-          'id' => 1,
-          'name' => 'Test User',
-          'email' => 'test@example.com'
-        }
-      ]
-    }
-
-    returned_json = JSON.parse response.body
-    assert_equal expected_response, returned_json
+    json = JSON.parse response.body
+    assert_equal 'Test User', json['signup']['name']
+    assert_equal 'signup-test@example.com', json['signup']['email']
+    assert_equal 1, json['users'].length
+    assert_equal 'Test User', json['users'][0]['name']
+    assert_equal 'signup-test@example.com', json['users'][0]['email']
   end
 
   test 'unsuccessful signup' do

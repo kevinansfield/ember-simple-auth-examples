@@ -21,15 +21,15 @@ class SignupsController < ApplicationController
         response = {
           signup: {
             id: 1,
-            name: 'Test User',
-            email: 'test@example.com',
-            user_id: 1
+            name: @signup.name,
+            email: @signup.email,
+            user_id: @signup.id
           },
           users: [
             {
               id: 1,
-              name: 'Test User',
-              email: 'test@example.com'
+              name: @signup.name,
+              email: @signup.email
             }
           ]
         }
