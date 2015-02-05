@@ -13,7 +13,15 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  should "be valid with a blank e-mail" do
+    assert_valid User.new
+  end
+
+  should "be invalid with a duplicate e-mail" do
+    user = User.create(email: 'test@example.com')
+    copy_cat = User.new(email: 'test@example.com')
+    assert_invalid copy_cat, email: "has already been taken"
+  end
+  
 end

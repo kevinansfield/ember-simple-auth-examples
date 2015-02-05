@@ -18,6 +18,15 @@ class EmailPasswordSignupTest < ActiveSupport::TestCase
     assert_invalid EmailPasswordSignup.new, email: "can't be blank"
   end
 
+  should "require a unique e-mail" do
+    attrs = {
+      email: 'test@example.com', password: 'testing', name: 'Test'
+    }
+    user = EmailPasswordSignup.create(attrs)
+    copy_cat = EmailPasswordSignup.new(attrs)
+    assert_invalid copy_cat, email: "has already been taken"
+  end
+
   should "require a password" do
     assert_invalid EmailPasswordSignup.new, password: "can't be blank"
   end
