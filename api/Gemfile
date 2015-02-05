@@ -4,8 +4,6 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'rails-api'
 
-gem 'spring', group: :development
-
 
 gem 'sqlite3'
 
@@ -13,3 +11,8 @@ gem 'bcrypt'
 gem 'active_type'
 
 gem 'shoulda-context', group: :test
+
+group :development do
+  gem 'spring'
+  gem 'annotate'
+end

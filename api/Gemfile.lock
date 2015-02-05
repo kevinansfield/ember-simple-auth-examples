@@ -38,6 +38,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    annotate (2.6.5)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
     arel (6.0.0)
     bcrypt (3.1.10)
     builder (3.2.2)
@@ -111,6 +114,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_type
+  annotate
   bcrypt
   rails (= 4.2.0)
   rails-api
