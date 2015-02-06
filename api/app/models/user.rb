@@ -25,10 +25,22 @@ class User < ActiveRecord::Base
     find_by(email: username.downcase)
   end
 
+  def assign_new_authentication_token!
+    self.authentication_token = generate_authentication_token
+    save!
+  end
+
   private
 
     def downcase_email
       self.email = email.downcase
+    end
+
+    def generate_authentication_token
+      loop do
+        token = SecureRandom.hex
+        break token unless self.class.exists?(authentication_token: token)
+      end
     end
 
 end

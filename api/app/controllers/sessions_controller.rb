@@ -4,8 +4,7 @@ class SessionsController < ApplicationController
     user = User.find_for_database_authentication(username: login_params[:username])
 
     if user and user.authenticate(login_params[:password])
-      user.authentication_token = SecureRandom.hex
-      user.save!
+      user.assign_new_authentication_token!
       render json: { access_token: user.authentication_token, token_type: 'bearer'}
     else
       error_msg = 'Username or password is invalid'

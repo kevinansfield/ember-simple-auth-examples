@@ -44,4 +44,16 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  context "#assign_new_authentication_token" do
+    should "generate and save new token" do
+      user = users(:main)
+      old_token = user.authentication_token
+
+      user.assign_new_authentication_token!
+
+      refute_nil user.authentication_token
+      refute_equal old_token, user.authentication_token
+    end
+  end
+
 end
