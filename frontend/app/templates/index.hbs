@@ -1,4 +1,8 @@
 <div class="container">
   <h2>Ember Simple Auth Examples</h2>
-  <p>You're not logged in yet...</p>
+  {{#if session.isAuthenticated}}
+    <p>You're logged in!</p>
+  {{else}}
+    <p>You're not logged in yet...</p>
+  {{/if}}
 </div>

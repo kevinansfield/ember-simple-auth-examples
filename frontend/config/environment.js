@@ -20,6 +20,10 @@ module.exports = function(environment) {
     }
   };
 
+  ENV['simple-auth'] = {
+    authorizer: 'simple-auth-authorizer:oauth2-bearer'
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -42,6 +46,12 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
+  }
+
+  if (environment === 'testing') {
+    ENV['simple-auth'] = {
+      store: 'simple-auth-session-store:ephemeral'
+    };
   }
 
   return ENV;
