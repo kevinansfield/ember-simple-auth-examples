@@ -32,11 +32,10 @@ module('Acceptance: Email/Password signup', {
       });
 
       this.post("/token", function(request) {
-        var data = JSON.parse(request.requestBody);
-        console.log('"/token" called with:', data);
         var result;
+        var expectedParams = 'grant_type=password&username=test%40example.com&password=password';
 
-        if (data.username === 'test@example.com' && data.password === 'password') {
+        if (request.requestBody === expectedParams) {
           result = {
             access_token: 'f49fc36c3a0c0f70d0ee13ed129b01ed',
             token_type: 'bearer'
@@ -73,7 +72,6 @@ test('logs in and redirects to index after successful signup', function() {
   click('#signup-submit');
 
   andThen(function() {
-    console.log('andThen entered');
     equal(currentPath(), 'index');
     equal(find('a:contains("Logout")').length, 1);
   });
