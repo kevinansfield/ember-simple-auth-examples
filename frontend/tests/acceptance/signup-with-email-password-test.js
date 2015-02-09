@@ -9,7 +9,7 @@ module('Acceptance: Email/Password signup', {
   setup: function() {
     application = startApp();
     server = new Pretender(function() {
-      this.post("/api/signups", function(request) {
+      this.post("/signups", function(request) {
         var data = JSON.parse(request.requestBody);
 
         var result = {
@@ -30,6 +30,25 @@ module('Acceptance: Email/Password signup', {
 
         return [201, {"Content-Type": "application/json"}, JSON.stringify(result)];
       });
+
+      this.post("/token", function(request) {
+        var data = JSON.parse(request.requestBody);
+        console.log('"/token" called with:', data);
+        var result;
+
+        if (data.username === 'test@example.com' && data.password === 'password') {
+          result = {
+            access_token: 'f49fc36c3a0c0f70d0ee13ed129b01ed',
+            token_type: 'bearer'
+          };
+          return [200, {"Content-Type": "application/json"}, JSON.stringify(result)];
+        } else {
+          result = {
+            error: "Username or password is invalid"
+          };
+          return [401, {"Content-Type": "application/json"}, JSON.stringify(result)];
+        }
+      });
     });
   },
   teardown: function() {
@@ -48,13 +67,14 @@ test('visiting /signup', function() {
 
 test('logs in and redirects to index after successful signup', function() {
   visit('/signup');
-  fillIn('#signup-email', 'test@xample.com');
+  fillIn('#signup-email', 'test@example.com');
   fillIn('#signup-name', 'Test User');
   fillIn('#signup-password', 'password');
   click('#signup-submit');
 
   andThen(function() {
+    console.log('andThen entered');
     equal(currentPath(), 'index');
-    equal(find('span:contains("Test User")').length, 1);
+    equal(find('a:contains("Logout")').length, 1);
   });
 });

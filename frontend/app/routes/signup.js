@@ -8,15 +8,26 @@ export default Ember.Route.extend({
 
   actions: {
     signup: function() {
-      var self = this;
+      console.log('signup entered');
       var signup = this.modelFor('signup');
+      var authenticator = 'simple-auth-authenticator:oauth2-password-grant';
 
-      signup.save().then(function(signup) {
-        // TODO: replace with actual session service
-        var user = signup.get('user');
-        self.controllerFor('application').set('session', {});
-        self.controllerFor('application').set('session.user', user);
-        self.transitionTo('index');
+      var email = signup.get('email');
+      var password = signup.get('password');
+
+      return signup.save().then(() => {
+        console.log('signup saved');
+        console.log('authenticating');
+        return this.get('session').authenticate(authenticator, {
+          identification: email,
+          password: password
+        }).then(() => {
+          console.log('authenticated');
+          console.log('transitioning to "index"');
+          this.transitionTo('index');
+        }).catch((error) => {
+          console.log('authentication failed', error);
+        });
       });
     }
   }

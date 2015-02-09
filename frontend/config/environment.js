@@ -16,12 +16,15 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      apiNamespace: 'api'
     }
   };
 
   ENV['simple-auth'] = {
     authorizer: 'simple-auth-authorizer:oauth2-bearer'
+  };
+
+  ENV['simple-auth-oauth2'] = {
+    serverTokenEndpoint: '/token'
   };
 
   if (environment === 'development') {
