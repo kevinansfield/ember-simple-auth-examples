@@ -27,7 +27,7 @@ class SignupsController < ApplicationController
           },
           users: [
             {
-              id: 1,
+              id: @signup.id,
               name: @signup.name,
               email: @signup.email
             }

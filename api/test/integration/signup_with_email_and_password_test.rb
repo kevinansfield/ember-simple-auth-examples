@@ -13,11 +13,15 @@ class SignupWithEmailAndPasswordTest < ActionDispatch::IntegrationTest
 
     assert_response :created
 
+    new_user = User.order(:created_at).last
+
     # returns signup and side-loaded user record
     json = JSON.parse response.body
     assert_equal 'Test User', json['signup']['name']
     assert_equal 'signup-test@example.com', json['signup']['email']
+    assert_equal new_user.id, json['signup']['user_id']
     assert_equal 1, json['users'].length
+    assert_equal new_user.id, json['users'][0]['id']
     assert_equal 'Test User', json['users'][0]['name']
     assert_equal 'signup-test@example.com', json['users'][0]['email']
   end
