@@ -6,7 +6,7 @@ class LoginWithEmailAndPasswordTest < ActionDispatch::IntegrationTest
     should "return authentication token" do
       user = users(:main)
 
-      post '/sessions', { username: user.email, password: 'testing' }
+      post '/token', { username: user.email, password: 'testing' }
 
       assert_response :ok
 
@@ -22,7 +22,7 @@ class LoginWithEmailAndPasswordTest < ActionDispatch::IntegrationTest
 
   context "with invalid params" do
     should "return unauthorized status with error" do
-      post '/sessions', { username: 'unknown', password: 'foo' }
+      post '/token', { username: 'unknown', password: 'foo' }
       assert_response :unauthorized
 
       json = JSON.parse response.body
